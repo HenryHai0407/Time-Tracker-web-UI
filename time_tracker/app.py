@@ -29,6 +29,9 @@ def format_time(time_str):
 
 # Function to convert to Helsinki time zone
 def convert_to_hel_time(dt):
+    # Ensure dt is naive (no timezone info) before localization
+    if dt.tzinfo is not None:
+        dt = dt.replace(tzinfo=None)  # Remove any existing timezone info
     utc_time = pytz.utc.localize(dt)  # Localize to UTC first
     hel_time = utc_time.astimezone(TIMEZONE)  # Convert to Helsinki time zone
     return hel_time
@@ -95,7 +98,7 @@ def update_time():
         return jsonify({"success": False, "message": "Employee not found"}), 404
 
     # Get current UTC date and time
-    now_time_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
+    now_time_utc = datetime.utcnow().replace(tzinfo=None)  # Remove any existing tzinfo (naive datetime)
     hel_time = convert_to_hel_time(now_time_utc)  # Convert to Helsinki time
     now_time = hel_time.strftime("%H:%M:%S")
     now_date = hel_time.strftime("%d/%m/%Y")
