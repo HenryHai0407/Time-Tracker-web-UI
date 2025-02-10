@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Time Tracker</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100px;
+        }
+        .login-btn {
+            background-color: green;
+            color: white;
+        }
+        .logout-btn {
+            background-color: red;
+            color: white;
+        }
+        .autocomplete-suggestions {
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background: white;
+            width: 200px;
+            z-index: 1000;
+        }
+        .autocomplete-suggestions div {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestions div:hover {
+            background: #f0f0f0;
+        }
+        @media (max-width: 600px) {
+            table {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 5px;
+            }
+            button {
+                width: 80px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Time Tracker</h1>
+    
+    <label for="employee-name">Employee Name:</label>
+    <input type="text" id="employee-name" placeholder="Search for employee name..." autocomplete="off">
+    <button id="search-btn">Search</button>  <!-- Search Button -->
+    <div id="autocomplete-list" class="autocomplete-suggestions"></div>
+    
+    <label for="location">Location:</label>
+    <select id="location">
+        <option value="YKH">YKH</option>
+        <option value="CC">CC</option>
+        <option value="KPI">KPI</option>
+        <option value="ISO">ISO</option>
+        <option value="TKK">TKK</option>
+        <option value="RED">RED</option>
+        <option value="AOA">AOA</option>
+        <option value="JUM">JUM</option>
+    </select>
+    
+    <div class="button-container">
+        <button class="login-btn" onclick="updateTime('Login')">Login</button>
+        <button class="logout-btn" onclick="updateTime('Logout')">Logout</button>
+    </div>
+    
+    <h2>Recorded Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Login</th>
+                <th>Logout</th>
+                <th>Location</th>
+                <th>Total Working Hours</th>
+            </tr>
+        </thead>
+        <tbody id="data-body">
+        </tbody>
+    </table>
+    
+    <script>
+        let employeeNames = [];
+        
+        function fetchData() {
+            $.getJSON("/data", function(data) {
+                let tableBody = "";
+                let names = new Set();
+                data.forEach(row => {
+                    tableBody += `<tr>
+                        <td>${row['Employee Name'] || 'No Name'}</td>
+                        <td>${row['Date'] || 'N/A'}</td>
+                        <td>${row['Login'] || 'N/A'}</td>
+                        <td>${row['Logout'] || 'N/A'}</td>
+                        <td>${row['Location'] || 'N/A'}</td>
+                        <td>${row['Total working hours'] || 'N/A'}</td>
+                    </tr>`;
+                    if (row['Employee Name']) {
+                        names.add(row['Employee Name']);
+                    }
+                });
+                employeeNames = Array.from(names);
+                $("#data-body").html(tableBody);
+            });
+        }
+        
+        function updateTime(action) {
+            let name = $("#employee-name").val().trim();
+            let location = $("#location").val();
+            
+            if (!name) {
+                alert("Please enter employee name");
+                return;
+            }
+            
+            $.ajax({
+                url: "/update",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ name: name, action: action, location: location }),
+                success: function(response) {
+                    if (response.success) {
+                        alert(action + " time updated successfully!");
+                        fetchData();
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                },
+                error: function() {
+                    alert("Failed to update time. Please try again.");
+                }
+            });
+        }
+        
+        $(document).ready(function() {
+            fetchData();
+            $("#employee-name").on("input", function() {
+                let input = $(this).val().toLowerCase();
+                let matches = employeeNames.filter(name => name.toLowerCase().includes(input));
+                let suggestionBox = $("#autocomplete-list");
+                suggestionBox.empty();
+                matches.forEach(name => {
+                    suggestionBox.append(`<div onclick="$('#employee-name').val('${name}'); $('#autocomplete-list').empty();">${name}</div>`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
