@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn Time_Tracker.app:app
