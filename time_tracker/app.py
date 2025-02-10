@@ -3,6 +3,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import os
+import pytz
 
 app = Flask(__name__)
 
@@ -16,12 +17,21 @@ client = gspread.authorize(creds)
 SHEET_NAME = "Time_tracker sheet - Yliopistonkatu"
 sheet = client.open(SHEET_NAME).sheet1
 
+# Time zone setup (Helsinki)
+TIMEZONE = pytz.timezone("Europe/Helsinki")
+
 # Function to format time
 def format_time(time_str):
     try:
         return datetime.strptime(time_str, "%H:%M:%S").strftime("%I:%M %p")
     except ValueError:
         return time_str  # Return as-is if it can't be parsed as time
+
+# Function to convert to Helsinki time zone
+def convert_to_hel_time(dt):
+    utc_time = pytz.utc.localize(dt)  # Localize to UTC first
+    hel_time = utc_time.astimezone(TIMEZONE)  # Convert to Helsinki time zone
+    return hel_time
 
 @app.route("/")
 def index():
@@ -84,9 +94,11 @@ def update_time():
     if row_number is None:
         return jsonify({"success": False, "message": "Employee not found"}), 404
 
-    # Get current date and time
-    now_time = datetime.now().strftime("%H:%M:%S")
-    now_date = datetime.now().strftime("%d/%m/%Y")
+    # Get current UTC date and time
+    now_time_utc = datetime.utcnow().replace(tzinfo=pytz.utc)
+    hel_time = convert_to_hel_time(now_time_utc)  # Convert to Helsinki time
+    now_time = hel_time.strftime("%H:%M:%S")
+    now_date = hel_time.strftime("%d/%m/%Y")
 
     if action == "Login":
         sheet.update_cell(row_number, 2, now_date)  # Update 'Date'
