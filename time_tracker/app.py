@@ -2,12 +2,14 @@ from flask import Flask, render_template, jsonify, request
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
 # Google Sheets API setup
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("time-tracker-project-450421-f3fc3aec2f6a.json", scope)
+json_keyfile_path = os.path.join(os.path.dirname(__file__), "time-tracker-project-450421-f3fc3aec2f6a.json")
+creds = ServiceAccountCredentials.from_json_keyfile_name(json_keyfile_path, scope)
 client = gspread.authorize(creds)
 
 # Open the Google Sheet
