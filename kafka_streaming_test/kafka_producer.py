@@ -1,5 +1,6 @@
 from kafka import KafkaProducer
 import time
+import json
 
 # Set up the Kafka producer
 producer = KafkaProducer(
@@ -8,15 +9,16 @@ producer = KafkaProducer(
 )
 
 # Send messages to the 'time_tracker' topic
-while True:
-    message = {
-        'employee_name': 'Hoang Hai',
-        'login_time': '2025-02-23T10:00:00',
-        'logout_time': '2025-02-23T18:00:00',
-        'location': 'YKH'
-    }
+messages = [
+    {'employee_name': 'Hoang Hai', 'login_time': '2025-02-23T10:00:00', 'logout_time': '2025-02-23T18:00:00', 'location': 'YKH'},
+    {'employee_name': 'Alice', 'login_time': '2025-02-23T09:00:00', 'logout_time': '2025-02-23T17:00:00', 'location': 'CC'},
+    {'employee_name': 'Bob', 'login_time': '2025-02-23T08:30:00', 'logout_time': '2025-02-23T16:30:00', 'location': 'KPI'}
+]
 
+for message in messages:
     producer.send('time_tracker', value=message)
     print(f"Sent: {message}")
+    time.sleep(3) # Wait for 3 seconds before sending the next message
 
-    time.sleep(5) # Wait for 5 seconds before sending the next message
+producer.flush()
+print("All messages have been sent.")

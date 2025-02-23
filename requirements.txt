@@ -30,3 +30,4 @@ Werkzeug==2.2.3
 pyspark==3.5.4
 kafka-python
 ipykernel
+

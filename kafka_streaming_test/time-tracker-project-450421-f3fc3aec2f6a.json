@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "time-tracker-project-450421",
+  "private_key_id": "f3fc3aec2f6ad75c3f470a5db2ee0006893f337e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDZw2YxMyapfBAV\nDj/iN+BeYPcw/tFdSekwGpfeRCBclGLC0TFWLlYSzD/fqFacFLG9anPloeZ/LHYl\nXNYQkh1kUnlylS8sEqqHEFe2NLg+7S9C7Vo3r8JGm1bVHybAnYT5XqvtzR6CVwSk\nxyLlP809toLW9ixzYnxbK1jBlaH2tnLlmG8Wh/8Nd9w+BR87E+ux/plY1VnyRIor\naJILG/mphUGWyG4wdqMdXVPdydxH1H8z1l2K8Nf6S5BrSg+hAYls5XDLODpBe/Ng\nxx5CSFu9mdQK08EnRlBR6tEOBddHSm2FW2W2eDbtDNItY8mmeoOmTVilEnFOzlse\nRIQ/OjfLAgMBAAECggEAESNEhYaFILbsgxbm5mEUYNXlWyJ3jEDdWVWDPzeB8bDh\n4HtbLfE7Z+mE9PXU5YRON3exw4Nm1i2QsycOJJBQDNp3lJHZSQqQOua8qGoxiw5A\n9zwiKs2QjtyTZfY4jaJRjT730+3qwtvU6zm0bT6Er6DCxYBROXF2RpLv1/Unoau1\nmHNym64JnPwiuZbSM8KM3kCyUMyo5O/8EPdvMhqmaqiiPGwzRPUpSGwJ6KRigxoy\nskO/MXbeiTiE5QDo/QG2T9enahnXD9klSEesh0GvPj/6PA5Yb2qPKWLDOFVmoUxn\ni3aBLKm5MTurwE85H1/In8dJmfl4Qkn2rPes8Ugk2QKBgQDy4L+Yepv75tERTELu\nZNaOM4AVdrkcoXMy50wfGUT/szlmrX9UuCINXrLNqFuzRduX/xf3rmp7g/+FQqjR\ny88vR+opArivvLdRCVtZGbELPP2pGTwSBs8fPnKCElv3hDs5n+mgI29ximOSJXne\nNIGV2RTUc3ts3s0J24ttZlKqYwKBgQDlh0oU3od5E5grgIzCdywOZr7us7A4X0rO\naonEFdZf82ATlMftEGn+yYPglY7NV+JZarvpzejKmL2ckSAMWKnkGJCQN5PbvHZu\n9WPWkFn2E5TxFUVTcZ5KN/rbYmp6SgYczEhAKc8lxx5HeNu/WZtCO1qvj7A/91zC\nyH7VLElFeQKBgBeS2uXY2LT9dUNhjImI/g41T3RF3re5r+2753aJRFoxMhwWMOqv\nKJb1nxM5CRWAbUz2dIQUyL8OU8nCa5JZXtWu/DpYykY8YeqapuQiCz4VAGXeTidN\nw+K7c+/OCmEe04THUay6Y8G4deukeYyouf8qX8wzHUK26V3Qklre+J0TAoGAe7tX\nuzJOs31VnbXZq4dUr5rBuKoTCACOsgGKrLLc8rKfC088C1a63QfC2NGmvpluwqcg\nD6TZpkV6ialOLnmpc/WuEKB1S5IoAh60qFj+tgHOW7wMuDPakcXlrFg8cBnxe5rA\nJB6ltYbGkt7bDyb95FFczKFX8NOnJLWycbZC9XkCgYBa+N7hnHgTTZ8b1e8dAkQ9\ns94jTMNb5b/cSsTJdFEWoM/Oey4yoz/07hcWuxTX9S0oV7zd/cOGOQK6HVDizID/\neBz/pu0o+t0eQcnfXbIJwJ3vrYJLctZDTWKbx9FAOmIjgD5RLrJbho0P11pusRew\nZZpwZydAqrJZmZvdt5uAPA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "timetrackerbot@time-tracker-project-450421.iam.gserviceaccount.com",
+  "client_id": "117752236657286302368",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/timetrackerbot%40time-tracker-project-450421.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

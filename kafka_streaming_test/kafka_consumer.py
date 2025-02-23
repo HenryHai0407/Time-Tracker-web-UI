@@ -1,4 +1,6 @@
 from kafka import KafkaConsumer
+from googleapiclient.discovery import build
+from google.oauth2.service_account import Credentials
 import json
 
 # Set up the Kafka consumer
@@ -11,6 +13,44 @@ consumer = KafkaConsumer(
     group_id='time_tracker_group' # Consumer group
 )
 
+# Function to append data to Google Sheets
+def append_to_google_sheet(sheet_id, range_name, values):
+    # Load the credentials from the service account key file
+    creds = Credentials.from_service_account_file('time-tracker-project-450421-f3fc3aec2f6a.json')
+    service = build('sheets','v4', credentials=creds)
+
+    # Prepare the data to be appended
+    body = {
+        'values': values
+    }
+
+    # Call the Sheets API to append the data
+    result = service.spreadsheets().values().append(
+        spreadsheetId=sheet_id,
+        range=range_name,
+        valueInputOption='RAW',
+        body=body
+    ).execute()
+
+    print(f"{result.get('updates').get('updatedCells')} cells appended.")
+
+# Google Sheets settings
+sheet_id = 'Test_Tracker_Data'
+range_name = 'Sheet1!A1' 
+
+
+# Consume messages and append to Google Sheets
 # Listen for messages
 for message in consumer:
     print(f"Received: {message.value}")
+
+    # Prepare data for Google Sheets
+    row = [
+        message.value['employee_name'],
+        message.value['login_time'],
+        message.value['logout_time'],
+        message.value['location'],
+    ]
+
+    # Append data to Google Sheets
+    append_to_google_sheet(sheet_id,range_name,[row])
