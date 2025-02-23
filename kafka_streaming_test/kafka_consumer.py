@@ -34,9 +34,9 @@ def append_to_google_sheet(sheet_id, range_name, values):
 
     print(f"{result.get('updates').get('updatedCells')} cells appended.")
 
-# Google Sheets settings
-sheet_id = 'Test_Tracker_Data'
-range_name = 'Sheet1!A1' 
+# Google Sheets settings (Extract sheet_id from GS URL link + Range Name)
+sheet_id = '1qbdOnYGP9fQ9pfuWiWF5q4VdWTXag7pA_Hz-SemJ0zU'
+range_name = 'Test_Tracker_Data!A1' 
 
 
 # Consume messages and append to Google Sheets
@@ -49,7 +49,7 @@ for message in consumer:
         message.value['employee_name'],
         message.value['login_time'],
         message.value['logout_time'],
-        message.value['location'],
+        message.value['location']
     ]
 
     # Append data to Google Sheets
